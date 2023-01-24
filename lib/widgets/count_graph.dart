@@ -166,7 +166,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         border: Border.all(color: const Color(0xff37434d)),
       ),
       minX: 0,
-      maxX: 11,
+      maxX: 10,
       minY: 0,
       maxY: 6,
       lineBarsData: [
@@ -178,7 +178,6 @@ class _LineChartSample2State extends State<LineChartSample2> {
             FlSpot(6.8, 3.1),
             FlSpot(8, 4),
             FlSpot(9.5, 3),
-            FlSpot(11, 4),
           ],
           isCurved: true,
           gradient: LinearGradient(

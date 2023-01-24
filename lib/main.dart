@@ -1,13 +1,24 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:varyrecycle/screens/camera.dart';
 import 'package:varyrecycle/screens/home.dart';
 import 'package:varyrecycle/screens/user.dart';
 
-void main() {
-  runApp(const App());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+
+  runApp(MaterialApp(
+    home: App(
+      camera: firstCamera,
+    ),
+  ));
 }
 
 class App extends StatefulWidget {
-  const App({super.key});
+  final CameraDescription camera;
+  const App({super.key, required this.camera});
 
   @override
   State<App> createState() => _AppState();
@@ -20,6 +31,15 @@ class _AppState extends State<App> {
 
   int _clickedPage = 0;
 
+  void _openCameraPage() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TakePictureScreen(
+                  camera: widget.camera,
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +50,7 @@ class _AppState extends State<App> {
         color: const Color.fromRGBO(254, 254, 252, 1),
         shape: const CircularNotchedRectangle(), //shape of notch
         notchMargin: 5,
+        elevation: 200,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,8 +92,8 @@ class _AppState extends State<App> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightGreen.shade500,
+        onPressed: _openCameraPage,
         child: const Icon(Icons.camera),
-        onPressed: () {},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: PageView(
